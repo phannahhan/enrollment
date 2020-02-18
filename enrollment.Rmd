@@ -19,7 +19,22 @@ library(reprex)
 x <- read_excel("class_enrollment_summary_by_term2.18.20.xlsx", skip = 3) %>%
   clean_names() %>%
   filter(! is.na(course_name)) %>%
-  arrange(desc(u_grad))
+  arrange(desc(u_grad)) %>%
+  slice(1) %>%
+  pull(course_title)
 x
 ```
+```{r}
+y <-
+  read_excel("class_enrollment_summary_by_term2.18.20.xlsx", skip = 3) %>%
+  clean_names() %>%
+  filter(! is.na(course_name)) %>%
+  arrange(desc(u_grad)) %>%
+  group_by(course_department) %>%
+  summarize(total = sum(total)) %>%
+  arrange(desc(total))
+y
+
+```
+
 
